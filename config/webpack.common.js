@@ -2,12 +2,12 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: path.resolve(__dirname, '..', './src/index.js'),
+  entry: path.resolve(__dirname, '..', './src/index.tsx'),
 
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(ts|js)x$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
       },
@@ -23,12 +23,12 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ['*', '.ts', '.tsx', '.js'],
   },
 
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Guestline | Hotel',
+      title: 'Guestline Hotel | Bartosz Szućko',
       template: path.resolve(__dirname, '..', './src/template/template.html'),
       favicon: path.resolve(__dirname, '..', './public/favicon.ico'),
       filename: 'index.html',

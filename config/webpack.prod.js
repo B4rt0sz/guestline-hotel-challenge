@@ -28,6 +28,7 @@ module.exports = {
       },
     ],
   },
+
   plugins: [
     new CopyPlugin({
       //example of using copy-webpack-plugin:
@@ -47,6 +48,7 @@ module.exports = {
       path: path.resolve(__dirname, '..', './.env.production'),
     }),
   ],
+
   optimization: {
     minimize: true,
     minimizer: [new CssMinimizerPlugin(), '...'],
