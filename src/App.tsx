@@ -1,8 +1,11 @@
-function App() {
+import { FC } from 'react'
+import Header from './layout/Header'
+
+const App: FC = () => {
   return (
-    <section className='webpack'>
-      <h1>Webpack Typescript</h1>
-    </section>
+    <div className='wrapper'>
+      <Header />
+    </div>
   )
 }
 

@@ -18,7 +18,7 @@ export const adultSlice = createSlice({
     },
 
     decreaseAdult: (state, action: PayloadAction<number>) => {
-      if (state.value > 0) {
+      if (state.value > 1) {
         state.value -= action.payload
       }
     },

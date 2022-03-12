@@ -3,3 +3,10 @@ body {
   background-color: $whiteColor;
   color: $blackColor;
 }
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
