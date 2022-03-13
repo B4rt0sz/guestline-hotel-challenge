@@ -14,7 +14,9 @@ export const childrenSlice = createSlice({
   initialState,
   reducers: {
     addChild: (state, action: PayloadAction<number>) => {
-      state.value += action.payload
+      if (state.value < 9) {
+        state.value += action.payload
+      }
     },
 
     decreaseChild: (state, action: PayloadAction<number>) => {
