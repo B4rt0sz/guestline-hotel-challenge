@@ -1,4 +1,4 @@
-# :hotel: Guestline Hotel
+# :hotel: Hotel Challenge
 
 :scroll: Creation of a website that will display a list of hotels and their rooms.
 
@@ -11,15 +11,15 @@ Main features:
 
 ## Live demo
 
-:computer: [Hotel](https://guestline-hotels.netlify.app)
+:computer: [Hotel Challenge](https://hotels-challenge.netlify.app/)
 
 ## Installation
 
 Clone this repository and npm install:
 
 ```
-git clone https://github.com/B4rt0sz/guestline-hotel-challenge.git
-cd guestline-hotel-challenge
+git clone https://github.com/B4rt0sz/hotel-challenge.git
+cd hotel-challenge
 npm install
 ```
 
@@ -38,9 +38,11 @@ You can see it immediately by following the link in the `Live demo` section or a
 ## For the project I used:
 
 - TypeScript
+- React
 - HTML
 - CSS/SCSS
 - Webpack
+- Redux
 
 ## License
 
