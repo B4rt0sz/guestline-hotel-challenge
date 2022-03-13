@@ -3,13 +3,12 @@ import axios, { AxiosResponse } from 'axios'
 import { useSelector } from 'react-redux'
 import { Watch } from 'react-loader-spinner'
 
-import { HotelDetails } from '../types/types'
 import { numberOfStar } from '../store/slices/starSlice'
 import HotelList from '../components/Hotel/HotelList'
 
 const Hotel: FC = () => {
   const [loaded, setLoaded] = useState<boolean>(false)
-  const [hotelList, setHotelList] = useState<HotelDetails[]>([])
+  const [hotelList, setHotelList] = useState([])
   const starsNumber = useSelector(numberOfStar)
 
   useEffect(() => {

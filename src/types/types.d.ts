@@ -1,3 +1,15 @@
+export type adultsState = {
+  value: number
+}
+
+export type childrenState = {
+  value: number
+}
+
+export type starState = {
+  value: number
+}
+
 export type HotelDetails = {
   id: string
   name: string
@@ -19,4 +31,13 @@ export type Info = {
 
 export type Rating = {
   rating: string
+}
+
+export type RoomDetails = {
+  name: string
+  occupancy: {
+    maxAdults: number
+    maxChildren: number
+  }
+  longDescription: string
 }

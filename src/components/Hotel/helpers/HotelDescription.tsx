@@ -21,7 +21,7 @@ const HotelDescription: FC<Info> = ({
         navMargin={0}
         useGPURender={true}
       />
-      <div className='main__hotel-description-info'>
+      <div className='hotel__description-info'>
         <h3>{hotelName}</h3>
         <p>{hotelAdresses[0]}</p>
         {hotelAdresses[1] && <p>{hotelAdresses[1]}</p>}

@@ -1,9 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
-
-interface adultsState {
-  value: number
-}
+import { adultsState } from '../../types/types'
 
 const initialState: adultsState = {
   value: 2,
