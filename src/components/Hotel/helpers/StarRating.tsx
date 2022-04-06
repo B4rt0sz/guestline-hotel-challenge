@@ -1,7 +1,10 @@
 import { FC } from 'react'
 
-import { Rating } from '../../../types/types'
 import { AiOutlineStar, AiFillStar } from 'react-icons/ai'
+
+type Rating = {
+  rating: string
+}
 
 const StarArray: FC<Rating> = ({ rating }) => {
   const hotelRating = Number(rating)

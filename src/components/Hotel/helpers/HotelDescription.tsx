@@ -1,7 +1,13 @@
 import { FC } from 'react'
 import SimpleImageSlider from 'react-simple-image-slider'
 
-import { Info } from '../../../types/types'
+type Info = {
+  hotelImages: {
+    url: string
+  }[]
+  hotelName: string
+  hotelAdresses: string[]
+}
 
 const HotelDescription: FC<Info> = ({
   hotelImages,

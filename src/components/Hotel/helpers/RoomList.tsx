@@ -1,6 +1,13 @@
 import { FC } from 'react'
 
-import { RoomDetails } from '../../../types/types'
+type RoomDetails = {
+  name: string
+  occupancy: {
+    maxAdults: number
+    maxChildren: number
+  }
+  longDescription: string
+}
 
 const RoomList: FC<RoomDetails> = ({ name, occupancy, longDescription }) => {
   return (
