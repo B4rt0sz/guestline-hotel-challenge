@@ -1,13 +1,13 @@
-import { FC, useEffect, useState } from 'react'
-import axios, { AxiosResponse } from 'axios'
+import { FC } from 'react'
 import { Watch } from 'react-loader-spinner'
 import { useSelector } from 'react-redux'
 
+import useRequest from '../../hooks/useRequest'
+import { numberOfAdults } from '../../store/slices/adultsSlice'
+import { numberOfChildren } from '../../store/slices/childrenSlice'
 import StarRating from './helpers/StarRating'
 import HotelDescription from './helpers/HotelDescription'
 import RoomList from './helpers/RoomList'
-import { numberOfAdults } from '../../store/slices/adultsSlice'
-import { numberOfChildren } from '../../store/slices/childrenSlice'
 
 type HotelDetails = {
   hotelID: string
@@ -26,30 +26,18 @@ const HotelList: FC<HotelDetails> = ({
   hotelRating,
   hotelImages,
 }) => {
-  const [loaded, setLoaded] = useState<boolean>(false)
-  const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false)
-  const [roomList, setRoomList] = useState([])
+  const { data, error } = useRequest(`${process.env.ROOMS_API}${hotelID}` ?? '')
   const adultGuest = useSelector(numberOfAdults)
   const childGuest = useSelector(numberOfChildren)
 
-  const aveliableRooms = roomList.filter(
+  const aveliableRooms = data?.rooms.filter(
     (guest: any) =>
       guest.occupancy.maxAdults >= adultGuest &&
       guest.occupancy.maxChildren >= childGuest
   )
 
-  useEffect(() => {
-    axios
-      .get(`${process.env.ROOMS_API}${hotelID}` ?? '')
-      .then((res: AxiosResponse) => {
-        setLoaded(true)
-        setRoomList(res.data.rooms)
-      })
-      .catch((error) => setShowErrorMessage(true))
-  }, [])
-
   const showRooms =
-    aveliableRooms.length > 0 ? (
+    aveliableRooms?.length > 0 ? (
       aveliableRooms.map((room: any) => (
         <RoomList
           key={room.id}
@@ -77,12 +65,17 @@ const HotelList: FC<HotelDetails> = ({
         <StarRating rating={hotelRating} />
       </div>
       <div className='hotel__roomsList'>
-        {loaded ? (
+        {data ? (
           showRooms
         ) : (
           <>
             <Watch height='50' width='50' color='#121212' ariaLabel='loading' />
-            {showErrorMessage ? <p>Rooms API error</p> : null}
+            {error ? (
+              <p className='errorMessage'>
+                Couldn't fetch rooms data. Please contact us if you see this
+                message.
+              </p>
+            ) : null}
           </>
         )}
       </div>

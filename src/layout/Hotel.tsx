@@ -1,31 +1,19 @@
-import { FC, useEffect, useState } from 'react'
-import axios, { AxiosResponse } from 'axios'
+import { FC } from 'react'
 import { useSelector } from 'react-redux'
 import { Watch } from 'react-loader-spinner'
 
+import useRequest from '../hooks/useRequest'
 import { numberOfStar } from '../store/slices/starSlice'
 import HotelList from '../components/Hotel/HotelList'
 
 const Hotel: FC = () => {
-  const [loaded, setLoaded] = useState<boolean>(false)
-  const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false)
-  const [hotelList, setHotelList] = useState([])
+  const { data, error } = useRequest(process.env.HOTELS_API ?? '')
   const starsNumber = useSelector(numberOfStar)
-
-  useEffect(() => {
-    axios
-      .get(process.env.HOTELS_API ?? '')
-      .then((res: AxiosResponse) => {
-        setLoaded(true)
-        setHotelList(res.data)
-      })
-      .catch((error) => setShowErrorMessage(true))
-  }, [])
 
   return (
     <div className='main'>
-      {loaded ? (
-        hotelList
+      {data ? (
+        data
           .filter((hotel: any) => hotel.starRating >= starsNumber)
           .map((hotel: any) => (
             <HotelList
@@ -40,7 +28,12 @@ const Hotel: FC = () => {
       ) : (
         <>
           <Watch height='100' width='100' color='#121212' ariaLabel='loading' />
-          {showErrorMessage ? <p>Hotel API error</p> : null}
+          {error ? (
+            <p className='errorMessage'>
+              Couldn't fetch hotels data. Please contact us if you see this
+              message.
+            </p>
+          ) : null}
         </>
       )}
     </div>
