@@ -3,36 +3,40 @@ import axios, { AxiosResponse } from 'axios'
 import { Watch } from 'react-loader-spinner'
 import { useSelector } from 'react-redux'
 
-import { HotelDetails } from '../../types/types'
 import StarRating from './helpers/StarRating'
 import HotelDescription from './helpers/HotelDescription'
 import RoomList from './helpers/RoomList'
 import { numberOfAdults } from '../../store/slices/adultsSlice'
 import { numberOfChildren } from '../../store/slices/childrenSlice'
 
+type HotelDetails = {
+  hotelID: string
+  hotelName: string
+  hotelAdresses: string[]
+  hotelRating: string
+  hotelImages: {
+    url: string
+  }[]
+}
+
 const HotelList: FC<HotelDetails> = ({
-  id,
-  name,
-  address1,
-  address2,
-  starRating,
-  images,
+  hotelID,
+  hotelName,
+  hotelAdresses,
+  hotelRating,
+  hotelImages,
 }) => {
   const [loaded, setLoaded] = useState<boolean>(false)
+  const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false)
   const [roomList, setRoomList] = useState([])
-  const hotelID = id
-  const hotelImages = images
-  const hotelName = name
-  const hotelAdresses = [address1, address2]
-  const hotelRating = starRating
   const adultGuest = useSelector(numberOfAdults)
   const childGuest = useSelector(numberOfChildren)
 
-  const numberOfRooms = roomList.filter(
+  const aveliableRooms = roomList.filter(
     (guest: any) =>
       guest.occupancy.maxAdults >= adultGuest &&
       guest.occupancy.maxChildren >= childGuest
-  ).length
+  )
 
   useEffect(() => {
     axios
@@ -41,24 +45,19 @@ const HotelList: FC<HotelDetails> = ({
         setLoaded(true)
         setRoomList(res.data.rooms)
       })
+      .catch((error) => setShowErrorMessage(true))
   }, [])
 
   const showRooms =
-    numberOfRooms > 0 ? (
-      roomList
-        .filter(
-          (guest: any) =>
-            guest.occupancy.maxAdults >= adultGuest &&
-            guest.occupancy.maxChildren >= childGuest
-        )
-        .map((room: any) => (
-          <RoomList
-            key={room.id}
-            name={room.name}
-            occupancy={room.occupancy}
-            longDescription={room.longDescription}
-          />
-        ))
+    aveliableRooms.length > 0 ? (
+      aveliableRooms.map((room: any) => (
+        <RoomList
+          key={room.id}
+          name={room.name}
+          occupancy={room.occupancy}
+          longDescription={room.longDescription}
+        />
+      ))
     ) : (
       <p className='noRooms'>
         We can't meet your requirements. Please change the number of guests.
@@ -81,7 +80,10 @@ const HotelList: FC<HotelDetails> = ({
         {loaded ? (
           showRooms
         ) : (
-          <Watch height='50' width='50' color='#121212' ariaLabel='loading' />
+          <>
+            <Watch height='50' width='50' color='#121212' ariaLabel='loading' />
+            {showErrorMessage ? <p>Rooms API error</p> : null}
+          </>
         )}
       </div>
     </div>
